@@ -274,6 +274,90 @@
       color: #666;
     }
 
+    /* ── Tester section ── */
+    .tester-section {
+      max-width: 640px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+      text-align: center;
+    }
+    .tester-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      margin-bottom: 10px;
+    }
+    .tester-intro {
+      color: #888;
+      margin-bottom: 28px;
+      font-size: 0.95rem;
+    }
+    .upload-label {
+      display: block;
+      cursor: pointer;
+    }
+    .upload-label input[type="file"] { display: none; }
+    .upload-inner {
+      border: 2px dashed #333;
+      border-radius: 16px;
+      padding: 32px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: #777;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .upload-label:hover .upload-inner {
+      border-color: #86007D;
+      color: #ccc;
+    }
+    .upload-icon { font-size: 2rem; }
+    .tester-preview {
+      display: flex;
+      justify-content: center;
+      margin: 28px 0 20px;
+    }
+    .tester-frame {
+      width: 180px;
+      height: 180px;
+    }
+    .tester-frame img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .analyse-btn {
+      display: inline-block;
+      margin-bottom: 28px;
+      padding: 14px 36px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--violet), var(--blue));
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .analyse-btn:hover { opacity: 0.85; transform: scale(1.03); }
+    .analyse-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .tester-result { margin-top: 10px; }
+    .verdict-card {
+      margin-top: 20px;
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 20px 24px;
+      font-size: 0.95rem;
+      color: #ccc;
+      line-height: 1.6;
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
     /* ── Footer ── */
     footer {
       text-align: center;
@@ -402,6 +486,47 @@
     </div>
   </section>
 
+  <!-- Tester -->
+  <section class="tester-section">
+    <h2>🔬 Test Someone Else</h2>
+    <p class="tester-intro">Upload a photo and let science do its work.</p>
+
+    <label class="upload-label" id="uploadLabel">
+      <input type="file" accept="image/*" id="photoUpload" />
+      <div class="upload-inner" id="uploadInner">
+        <span class="upload-icon">📸</span>
+        <span>Drop a photo or click to upload</span>
+      </div>
+    </label>
+
+    <div class="tester-preview" id="testerPreview" style="display:none">
+      <div class="photo-frame tester-frame">
+        <img id="testerImg" src="" alt="Subject" />
+      </div>
+    </div>
+
+    <button class="analyse-btn" id="analyseBtn" style="display:none">
+      Run the Gayometer™
+    </button>
+
+    <div class="tester-result" id="testerResult" style="display:none">
+      <div class="meter-track">
+        <div class="meter-fill" id="testerFill"></div>
+      </div>
+      <div class="meter-ticks">
+        <span>Straight</span>
+        <span>Bi-curious</span>
+        <span>Pretty Gay</span>
+        <span>Very Gay</span>
+        <span>Certified Gay</span>
+      </div>
+      <p class="meter-label" id="testerLabel"></p>
+      <div class="verdict-card" id="verdictCard">
+        <p id="verdictText"></p>
+      </div>
+    </div>
+  </section>
+
   <div class="rainbow-bar"></div>
   <footer>
     Made with 🏳️‍🌈 love &nbsp;|&nbsp;
@@ -410,7 +535,7 @@
   </footer>
 
   <script>
-    // Animate the gayometer to 96%
+    // ── Tom's fixed meter ──
     window.addEventListener('load', () => {
       const fill = document.getElementById('meterFill');
       const label = document.getElementById('meterLabel');
@@ -418,6 +543,107 @@
         fill.style.width = '96%';
         label.textContent = '96% — Certified Gay Icon 🏳️‍🌈';
       }, 400);
+    });
+
+    // ── Tester ──
+    const VERDICTS = [
+      { max: 15,  emoji: '🧢', label: 'Barely Registers',     comments: [
+        "Statistically indistinguishable from a flat-cap and a pint of Carling. Almost impressive.",
+        "The gaydar didn't even beep. That's actually quite an achievement.",
+        "Heterosexuality confirmed. We're almost concerned."
+      ]},
+      { max: 30,  emoji: '🤔', label: 'Questioning',          comments: [
+        "Owns at least one scented candle but claims it was a gift.",
+        "Has rewatched Mamma Mia more than twice but only 'ironically'.",
+        "Knows all the words to an ABBA song. Says it doesn't count."
+      ]},
+      { max: 50,  emoji: '🌸', label: 'Bi-Curious',           comments: [
+        "The vibe is giving 'hasn't admitted it yet'. The jacket is doing a lot of talking.",
+        "Regularly uses the word 'gorgeous' to describe food. And men.",
+        "Described a male friend as 'objectively handsome'. Three times. Unprompted."
+      ]},
+      { max: 65,  emoji: '🌈', label: 'Pretty Gay',           comments: [
+        "Has strong opinions about which Housewives franchise is the best. That's basically a qualification.",
+        "The posture alone is giving 70%. The footwear sealed the deal.",
+        "Knows the difference between teal and turquoise. Without Googling."
+      ]},
+      { max: 80,  emoji: '💅', label: 'Very Gay',             comments: [
+        "Ordered an oat flat white without a moment's hesitation. Science doesn't lie.",
+        "The fit, the hair, the energy — this person did not get dressed in the dark.",
+        "Sent a voice note that was longer than most TED talks. About a dinner party."
+      ]},
+      { max: 92,  emoji: '🦩', label: 'Extremely Gay',        comments: [
+        "Every single pixel of this photo is gay. The background. The lighting. The vibe.",
+        "Scientists have confirmed this photo emits a frequency only audible to gay people.",
+        "If gay were a font, this person would be Comic Sans Bold, italic, size 72."
+      ]},
+      { max: 101, emoji: '👑', label: 'Certified Gay Icon',   comments: [
+        "The International Institute of Gay Sciences has requested this photo for their annual report.",
+        "The Gayometer has never read this high before. We may need to recalibrate.",
+        "Congratulations. You have broken the instrument. Please report to your nearest Pride parade immediately."
+      ]},
+    ];
+
+    function getVerdict(score) {
+      return VERDICTS.find(v => score < v.max);
+    }
+
+    function randomBetween(a, b) {
+      return Math.floor(Math.random() * (b - a + 1)) + a;
+    }
+
+    function pick(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    const upload   = document.getElementById('photoUpload');
+    const inner    = document.getElementById('uploadInner');
+    const preview  = document.getElementById('testerPreview');
+    const testerImg = document.getElementById('testerImg');
+    const btn      = document.getElementById('analyseBtn');
+    const result   = document.getElementById('testerResult');
+    const tFill    = document.getElementById('testerFill');
+    const tLabel   = document.getElementById('testerLabel');
+    const vCard    = document.getElementById('verdictCard');
+    const vText    = document.getElementById('verdictText');
+
+    upload.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      testerImg.src = url;
+      preview.style.display = 'flex';
+      btn.style.display = 'inline-block';
+      result.style.display = 'none';
+      tFill.style.width = '0%';
+      inner.innerHTML = '<span class="upload-icon">✅</span><span>Photo loaded — ready to analyse</span>';
+    });
+
+    btn.addEventListener('click', () => {
+      result.style.display = 'block';
+      tFill.style.width = '0%';
+      tLabel.textContent = 'Analysing…';
+      vCard.style.display = 'none';
+      btn.disabled = true;
+
+      // Weighted random: bias towards the funny high end
+      const weights = [3, 5, 10, 15, 20, 22, 25]; // cumulative probability bins
+      const total = weights.reduce((a,b) => a+b, 0);
+      let r = Math.random() * total, bin = 0;
+      for (let i = 0; i < weights.length; i++) { r -= weights[i]; if (r <= 0) { bin = i; break; } }
+      const ranges = [[2,14],[15,30],[31,50],[51,65],[66,80],[81,92],[93,99]];
+      const score = randomBetween(...ranges[bin]);
+      const verdict = getVerdict(score);
+
+      setTimeout(() => {
+        tFill.style.width = score + '%';
+        tLabel.textContent = `${score}% — ${verdict.emoji} ${verdict.label}`;
+        setTimeout(() => {
+          vText.textContent = pick(verdict.comments);
+          vCard.style.display = 'block';
+          btn.disabled = false;
+        }, 800);
+      }, 300);
     });
   </script>
 
