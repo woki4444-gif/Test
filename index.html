@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tom Hurst — Verified Gay Icon</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #FF0018;
+      --orange: #FFA52C;
+      --yellow: #FFFF41;
+      --green: #008018;
+      --blue: #0000F9;
+      --violet: #86007D;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Rainbow stripe banner ── */
+    .rainbow-bar {
+      height: 10px;
+      background: linear-gradient(90deg,
+        var(--red) 0%, var(--orange) 20%, var(--yellow) 38%,
+        var(--green) 54%, var(--blue) 74%, var(--violet) 100%);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 60px 20px 50px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(134,0,125,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .crown { font-size: 3rem; margin-bottom: 10px; }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      line-height: 1.1;
+      background: linear-gradient(90deg,
+        var(--red), var(--orange), var(--yellow),
+        var(--green), var(--blue), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      margin-top: 14px;
+      font-size: 1.15rem;
+      color: #ccc;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Photo card ── */
+    .photo-section {
+      display: flex;
+      justify-content: center;
+      padding: 10px 20px 40px;
+    }
+
+    .photo-frame {
+      position: relative;
+      display: inline-block;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg,
+        var(--red), var(--orange), var(--yellow),
+        var(--green), var(--blue), var(--violet));
+    }
+
+    .photo-frame img,
+    .photo-placeholder {
+      display: block;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #222;
+    }
+
+    .photo-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 0.75rem;
+      color: #888;
+      gap: 8px;
+    }
+
+    .photo-placeholder span { font-size: 2.5rem; }
+
+    /* ── Gay-o-meter ── */
+    .meter-section {
+      max-width: 640px;
+      margin: 0 auto 50px;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .meter-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .meter-track {
+      width: 100%;
+      height: 38px;
+      background: #1e1e1e;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 2px solid #333;
+      position: relative;
+    }
+
+    .meter-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        var(--red), var(--orange), var(--yellow),
+        var(--green), var(--blue), var(--violet));
+      transition: width 2.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .meter-label {
+      margin-top: 12px;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #f0a0ff;
+    }
+
+    .meter-ticks {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.72rem;
+      color: #666;
+      padding: 0 4px;
+    }
+
+    /* ── Evidence cards ── */
+    .evidence-section {
+      max-width: 860px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .evidence-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 24px 20px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #86007D;
+    }
+
+    .card-icon { font-size: 2rem; margin-bottom: 10px; }
+    .card h3 { font-size: 1rem; margin-bottom: 6px; color: #f0a0ff; }
+    .card p { font-size: 0.88rem; color: #aaa; line-height: 1.5; }
+
+    /* ── Certificate ── */
+    .cert-section {
+      max-width: 580px;
+      margin: 0 auto 70px;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .cert {
+      background: #111;
+      border: 3px solid transparent;
+      border-radius: 20px;
+      padding: 36px 28px;
+      position: relative;
+      background-clip: padding-box;
+      outline: 3px solid transparent;
+      /* double-border rainbow trick */
+      box-shadow: 0 0 0 3px #86007D, 0 0 0 6px #0000F9,
+                  0 0 0 9px #008018, 0 0 0 12px #FFFF41;
+    }
+
+    .cert .seal { font-size: 3.5rem; margin-bottom: 10px; }
+    .cert h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      background: linear-gradient(90deg, var(--orange), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    .cert p { color: #bbb; font-size: 0.9rem; line-height: 1.6; }
+    .cert .signature {
+      margin-top: 20px;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.78rem;
+      color: #444;
+    }
+
+    footer .rainbow-text {
+      background: linear-gradient(90deg,
+        var(--red), var(--orange), var(--yellow),
+        var(--green), var(--blue), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+
+    /* ── Floating flags ── */
+    .flags {
+      position: fixed;
+      top: 0; right: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.06;
+      font-size: 6rem;
+      padding: 10px;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="rainbow-bar"></div>
+  <div class="flags">🏳️‍🌈</div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="crown">🏳️‍🌈👑🏳️‍🌈</div>
+    <h1>Tom Hurst<br>Is Very Gay</h1>
+    <p class="subtitle">An official scientific assessment &amp; celebration</p>
+  </section>
+
+  <!-- Photo -->
+  <div class="photo-section">
+    <div class="photo-frame">
+      <!--
+        TO ADD TOM'S PHOTO:
+        Replace the .photo-placeholder div below with:
+        <img src="URL_OR_PATH_TO_TOM_PHOTO" alt="Tom Hurst" />
+      -->
+      <div class="photo-placeholder">
+        <span>🏳️‍🌈</span>
+        Tom Hurst<br>Fifth Dimension AI
+      </div>
+    </div>
+  </div>
+
+  <!-- Gay-o-meter -->
+  <section class="meter-section">
+    <h2>🌈 The Official Gayometer™</h2>
+    <div class="meter-track">
+      <div class="meter-fill" id="meterFill"></div>
+    </div>
+    <div class="meter-ticks">
+      <span>Straight</span>
+      <span>Bi-curious</span>
+      <span>Pretty Gay</span>
+      <span>Very Gay</span>
+      <span>Certified Gay</span>
+    </div>
+    <p class="meter-label" id="meterLabel">Calculating…</p>
+  </section>
+
+  <!-- Evidence -->
+  <section class="evidence-section">
+    <h2>📋 Supporting Evidence</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">💅</div>
+        <h3>Impeccable Taste</h3>
+        <p>Sources confirm Tom has opinions about font kerning and interior design. Coincidence? We think not.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>Works in AI</h3>
+        <p>At Fifth Dimension AI, no less. Only very gay people get to work at places with names that cool.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">✨</div>
+        <h3>Radiates Vibes</h3>
+        <p>Multiple eyewitnesses report that Tom simply radiates an energy best described as "fabulously gay."</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎶</div>
+        <h3>Questionable Playlist</h3>
+        <p>Unconfirmed reports suggest his Spotify Wrapped featured at least three Kylie Minogue albums.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🦄</div>
+        <h3>Loves a Good Metaphor</h3>
+        <p>Regularly describes machine learning pipelines using words like "delightful" and "gorgeous."</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">☕</div>
+        <h3>Fancy Coffee Order</h3>
+        <p>Oat milk. Need we say more? The data speaks for itself.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificate -->
+  <section class="cert-section">
+    <div class="cert">
+      <div class="seal">🏆</div>
+      <h2>Certificate of Gayness</h2>
+      <p>
+        This is to certify that <strong>Tom Hurst</strong>, of Fifth Dimension AI,
+        has been assessed by the International Institute of Gay Sciences and found to be
+        <strong>exceptionally, magnificently, and irrefutably gay</strong>.
+        This certification is valid in perpetuity and cannot be revoked.
+      </p>
+      <p class="signature">— The Gay Council, 2025</p>
+    </div>
+  </section>
+
+  <div class="rainbow-bar"></div>
+  <footer>
+    Made with 🏳️‍🌈 love &nbsp;|&nbsp;
+    <span class="rainbow-text">TomHurst.gay</span>
+    &nbsp;|&nbsp; No Toms were harmed in the making of this website
+  </footer>
+
+  <script>
+    // Animate the gayometer to 96%
+    window.addEventListener('load', () => {
+      const fill = document.getElementById('meterFill');
+      const label = document.getElementById('meterLabel');
+      setTimeout(() => {
+        fill.style.width = '96%';
+        label.textContent = '96% — Certified Gay Icon 🏳️‍🌈';
+      }, 400);
+    });
+  </script>
+
+</body>
+</html>
